@@ -118,6 +118,27 @@
           alpha: this.setAlpha,
         })
 
+      if (Hilo.event.POINTER_START == "touchstart") {
+        subBtn.on('mousedown', (e) => {
+          clearInterval(this.timer)
+
+          if (!this.questionsPanelCanvas.setAnswer.every(item => item)) return
+
+          this.setAnswer = this.questionsPanelCanvas.setAnswer
+
+          this.answerError = this.questionsPanelCanvas.setAnswer.filter((item, index) => item.questionId !== this.rightAnser[index])
+
+          this.isAllRight = !this.answerError.length
+
+          // 移除作答模版
+          this.stage.removeChild(this.questionsPanelCanvas)
+
+          // 创建显示模版
+          this.questionsPanelCanvas = this.createPanel('result')
+
+          this.createModel(subBtn)
+        })
+      }
         subBtn.on(Hilo.event.POINTER_START, (e) => {
           clearInterval(this.timer)
 
@@ -177,6 +198,16 @@
           visible: true,
           alpha: this.setAlpha
         })
+
+      if (Hilo.event.POINTER_START == "touchstart") {
+        resetButtons.on('mousedown', (e) => {
+
+          if (this.isAllRight) return this.resetHandel()
+
+          e.eventTarget.id ? this.resetHandel() : this.seachHanel()
+
+        })
+      }
 
         resetButtons.on(Hilo.event.POINTER_START, (e) => {
 

@@ -4,7 +4,7 @@ export default class ResetButton extends Hilo.Container {
     super(properties)
     this.resetButton(properties)
   }
-  resetButton (properties) {
+  resetButton(properties) {
     const buttonName = []
 
     properties.images.forEach((item, index) => {
@@ -22,20 +22,50 @@ export default class ResetButton extends Hilo.Container {
       const initX = index * 630
       const initY = 0
 
+      if (Hilo.event.POINTER_START == "touchstart") {
+        buttonName[index].on('mousedown', (e) => {
+          Hilo.Tween.to(
+            buttonName[index], {
+              scaleX: 1.05,
+              scaleY: 1.05,
+              x: initX - (properties.rect[2] * 0.05) / 2,
+              y: initY - (properties.rect[3] * 0.05) / 2
+            }, {
+              duration: 100,
+              onComplete() {
+                Hilo.Tween.to(
+                  buttonName[index], {
+                    scaleX: 1,
+                    scaleY: 1,
+                    x: initX,
+                    y: initY
+                  }, {
+                    duration: 300
+                  }
+                )
+              }
+            }
+          )
+        })
+      }
+
       buttonName[index].on(Hilo.event.POINTER_START, (e) => {
         Hilo.Tween.to(
-          buttonName[index],
-          {
-            scaleX: 1.05, scaleY: 1.05,
-            x: initX - (properties.rect[2] * 0.05) / 2, y: initY - (properties.rect[3] * 0.05) / 2
-          },
-          {
+          buttonName[index], {
+            scaleX: 1.05,
+            scaleY: 1.05,
+            x: initX - (properties.rect[2] * 0.05) / 2,
+            y: initY - (properties.rect[3] * 0.05) / 2
+          }, {
             duration: 100,
-            onComplete () {
+            onComplete() {
               Hilo.Tween.to(
-                buttonName[index],
-                { scaleX: 1, scaleY: 1, x: initX, y: initY },
-                {
+                buttonName[index], {
+                  scaleX: 1,
+                  scaleY: 1,
+                  x: initX,
+                  y: initY
+                }, {
                   duration: 300
                 }
               )

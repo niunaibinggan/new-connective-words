@@ -1,5 +1,5 @@
 import Hilo from 'hilojs'
-export default function initStage () {
+export default function initStage() {
   let stage = null
   let ticker = null
 
@@ -18,6 +18,12 @@ export default function initStage () {
     container: document.createElement('canvas')
   })
   //绑定交互事件
+  if (Hilo.event.POINTER_START == "touchstart") {
+    stage.enableDOMEvent('mousedown', true)
+    stage.enableDOMEvent('mousemove', true)
+    stage.enableDOMEvent('mouseup', true)
+  }
+
   stage.enableDOMEvent(Hilo.event.POINTER_START, true)
   stage.enableDOMEvent(Hilo.event.POINTER_MOVE, true)
   stage.enableDOMEvent(Hilo.event.POINTER_END, true)
@@ -35,5 +41,8 @@ export default function initStage () {
   ticker.start(true)
   stage.ticker = ticker
 
-  return { stage, ticker }
+  return {
+    stage,
+    ticker
+  }
 }

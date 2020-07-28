@@ -4,7 +4,7 @@ export default class SubmitButton extends Hilo.Container {
     super(properties)
     this.submit(properties)
   }
-  submit (properties) {
+  submit(properties) {
     // 提交按钮
     const sub = new Hilo.Bitmap({
       x: 0,
@@ -16,20 +16,50 @@ export default class SubmitButton extends Hilo.Container {
       scaleY: 1
     }).addTo(this)
 
+    if (Hilo.event.POINTER_START == "touchstart") {
+      sub.on('mousedown', (e) => {
+        Hilo.Tween.to(
+          sub, {
+            scaleX: 1.05,
+            scaleY: 1.05,
+            x: -(properties.rect[2] * 0.05) / 2,
+            y: -(properties.rect[3] * 0.05) / 2
+          }, {
+            duration: 100,
+            onComplete() {
+              Hilo.Tween.to(
+                sub, {
+                  scaleX: 1,
+                  scaleY: 1,
+                  x: 0,
+                  y: 0
+                }, {
+                  duration: 300
+                }
+              )
+            }
+          }
+        )
+      })
+    }
+
     sub.on(Hilo.event.POINTER_START, (e) => {
       Hilo.Tween.to(
-        sub,
-        {
-          scaleX: 1.05, scaleY: 1.05,
-          x: -(properties.rect[2] * 0.05) / 2, y: -(properties.rect[3] * 0.05) / 2
-        },
-        {
+        sub, {
+          scaleX: 1.05,
+          scaleY: 1.05,
+          x: -(properties.rect[2] * 0.05) / 2,
+          y: -(properties.rect[3] * 0.05) / 2
+        }, {
           duration: 100,
-          onComplete () {
+          onComplete() {
             Hilo.Tween.to(
-              sub,
-              { scaleX: 1, scaleY: 1, x: 0, y: 0 },
-              {
+              sub, {
+                scaleX: 1,
+                scaleY: 1,
+                x: 0,
+                y: 0
+              }, {
                 duration: 300
               }
             )
