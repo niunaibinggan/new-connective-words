@@ -11,9 +11,10 @@
   import ExportScence from '~/components/game/exportScence'
   import SubmitButton from '~/components/game/submitButton'
   import Panel from '~/components/game/panel'
-  // import ResultModel from '~/components/game/resultModel'
-  // import ResetButton from '~/components/game/resetButton'
-  // import Text from '~/components/game/text'
+  import ResultModel from '~/components/game/resultModel'
+  import ResetButton from '~/components/game/resetButton'
+  import Text from '~/components/game/text'
+  import sortBy from 'lodash'
   export default {
     data () {
       return {
@@ -29,6 +30,7 @@
         setAlpha: 1,
         answerError: [],
         setAnswer: [],
+        rightAnser: [],
         timer: null
       }
     },
@@ -41,11 +43,13 @@
         questions = localStorage.getItem('questionsConfig')
       }
 
-      // if (!questions) return this.$router.replace('/config')
+      if (!questions) return this.$router.replace('/config')
 
       this.questions = JSON.parse(questions)
 
-      this.shuffle(this.questions.left.concat(this.questions.useless))
+      this.rightAnser = this.questions.content.map(item => item.id)
+
+      this.shuffle(this.questions.content)
 
       // 预加载图片
       const Assets = AssetsFectory()
@@ -73,7 +77,7 @@
       this.stage.addChild(exportScence)
       this.questionsSubmitCanvas = this.createSubmitButton()
       this.questionsPanelCanvas = this.createPanel('panel')
-      // this.resultCanvas = this.createResult()
+      this.resultCanvas = this.createResult()
 
     },
     methods: {
@@ -86,7 +90,7 @@
           y: 0,
           errorIcon,
           rightIcon,
-          questions: this.questions,
+          questions: this.questions.content,
           alpha: this.setAlpha,
           answerError: this.answerError,
           type,
@@ -96,11 +100,11 @@
         })
 
         this.stage.addChild(panel)
-        // if (type === 'panel') {
-        //   this.timer = setInterval(() => {
-        //     this.questionsSubmitCanvas.visible = this.questionsPanelCanvas.setAnswer.every(item => item)
-        //   }, 300)
-        // }
+        if (type === 'panel') {
+          this.timer = setInterval(() => {
+            this.questionsSubmitCanvas.visible = this.questionsPanelCanvas.setAnswer.every(item => item)
+          }, 300)
+        }
 
         return panel
       },
@@ -111,7 +115,7 @@
           y: (1080 - 96) / 2 + 430,
           images: this.assets.submitButton,
           rect: [0, 0, 329, 96],
-          visible: true,
+          visible: false,
           alpha: this.setAlpha,
         })
 
@@ -238,7 +242,7 @@
           arr[randomIndex] = arr[i];
           arr[i] = itemAtIndex;
         }
-        this.questions.concat = arr
+        this.questions.content = arr
       },
     }
   }
