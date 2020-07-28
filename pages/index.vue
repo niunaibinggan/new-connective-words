@@ -95,7 +95,6 @@
           answerError: this.answerError,
           type,
           stage: this.stage,
-          answerError: this.answerError,
           setAnswer: this.setAnswer
         })
 

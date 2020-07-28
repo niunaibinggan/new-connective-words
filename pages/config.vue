@@ -60,8 +60,19 @@
         },
         target: 10,
         current: -1,
-        timer: null
+        timer: null,
+        isWaiting: false
       }
+    },
+    async mounted () {
+      let questions
+      try {
+        questions = await this.$testload()
+      } catch (error) {
+        questions = localStorage.getItem('questionsConfig')
+      }
+      if (!questions) return
+      this.questions = JSON.parse(questions)
     },
     methods: {
       focusInput (index) {
@@ -113,6 +124,7 @@
         }
       },
       async submitConfig () {
+        if (this.isWaiting) return
         const leftVerify = this.questions.content.every(item => item.text)
         if (!leftVerify) {
           this.$message({
@@ -141,11 +153,14 @@
         setQuestion.result = result
 
         try {
+          this.isWaiting = true
           const thumbnail = await save(setQuestion)
+          console.log(thumbnail)
           await this.$testsave(thumbnail, JSON.stringify(setQuestion))
         } catch (error) {
           localStorage.setItem('questionsConfig', JSON.stringify(setQuestion))
         }
+        this.isWaiting = false
         this.$router.replace('/')
       },
       changeHandelInput (number, nextNumber) {
