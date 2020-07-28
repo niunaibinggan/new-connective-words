@@ -21,7 +21,10 @@
                class="root__item-input"
                placeholder="输入正确答案"
                v-model="item.text"
+<<<<<<< HEAD
                maxlength="4"
+=======
+>>>>>>> e6b250a43372dd4a5b53f7984dbf5fd2c151e9a4
                @focus="focusInput(index)"
                @blur="blurInput(index)"
                @keyup="keyupInput($event,index)">
@@ -62,8 +65,12 @@
         },
         target: 10,
         current: -1,
+<<<<<<< HEAD
         timer: null,
         isWaiting:false
+=======
+        timer: null
+>>>>>>> e6b250a43372dd4a5b53f7984dbf5fd2c151e9a4
       }
     },
     methods: {
@@ -116,7 +123,10 @@
         }
       },
       async submitConfig () {
+<<<<<<< HEAD
         if(this.isWaiting){return false}
+=======
+>>>>>>> e6b250a43372dd4a5b53f7984dbf5fd2c151e9a4
         const leftVerify = this.questions.content.every(item => item.text)
         if (!leftVerify) {
           this.$message({
