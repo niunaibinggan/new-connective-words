@@ -18,17 +18,17 @@ export default class ExportScence extends Hilo.Container {
 
     // 时间背景
     new Hilo.Bitmap({
-      x: (1920 - 484) / 2,
+      x: 50,
       y: 40,
       image: properties.images.titleBg,
-      rect: [0, 0, 484, 146,],
+      rect: [0, 0, 387, 151,],
       visible: true
     }).addTo(this)
 
     // 时间倒计时
     new Text({
       text: properties.title,
-      fontSize: properties.title.length < 9 ? 45 : 45 - Math.round(properties.title.length / 4) * 5,
+      fontSize: properties.title.length < 9 ? 45 : 45 - Math.round(properties.title.length / 3) * 5,
       bold: true,
       textAlign: 'center',
       textVAlign: 'middle',
@@ -36,9 +36,9 @@ export default class ExportScence extends Hilo.Container {
       visible: true,
       cc: 3,
       alpha: 1,
-      reTextWidth: 484,
-      x: (1920 - 484) / 2,
-      y: properties.title.length < 9 ? 20 : 20 + (45 - (45 - Math.round(properties.title.length / 4) * 5)) / 2,
+      reTextWidth: 387,
+      x: 45,
+      y: properties.title.length < 9 ? 50 : 50 + (45 - (45 - Math.round(properties.title.length / 3) * 5)) / 2,
       color: '#ffffff',
     }).addTo(this)
   }
