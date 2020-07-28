@@ -2,6 +2,7 @@
   <div class="root">
     <h3 class="root__title-set">
       <input type="text"
+             maxlength="6"
              v-model="questions.title"
              placeholder="请输入标题">
     </h3>
@@ -20,6 +21,7 @@
                class="root__item-input"
                placeholder="输入正确答案"
                v-model="item.text"
+               maxlength="4"
                @focus="focusInput(index)"
                @blur="blurInput(index)"
                @keyup="keyupInput($event,index)">
